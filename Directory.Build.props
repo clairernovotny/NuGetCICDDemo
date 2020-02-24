@@ -1,0 +1,19 @@
+﻿<Project>
+
+  <PropertyGroup>
+    <Authors>Your Name Here</Authors>
+    <Copyright>Copyright (C) Your Name Here</Copyright>
+    <Description>Demo Package for showing CI/CD</Description>
+    <PackageTags>NuGet;ci/cd;demo</PackageTags>
+    <PackageProjectUrl>https://github.com/YourOrg/YourRepo</PackageProjectUrl>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <DebugType>embedded</DebugType>
+    <PublishRepositoryUrl>true</PublishRepositoryUrl>
+    <EmbedUntrackedSources>true</EmbedUntrackedSources>
+  </PropertyGroup>
+  
+  <ItemGroup>
+    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" PrivateAssets="All"/>
+  </ItemGroup>
+
+</Project>

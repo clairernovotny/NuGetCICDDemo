@@ -1,0 +1,42 @@
+trigger:
+- master
+- rel/*
+
+pr:
+- master
+- rel/*
+
+pool:
+  vmImage: ubuntu-latest
+
+variables: 
+  BuildConfiguration: Release
+
+steps:
+
+- task: DotNetCoreCLI@2  
+  inputs:
+    command: custom
+    custom: tool
+    arguments: restore
+  displayName: Restore tools
+
+- task: DotNetCoreCLI@2  
+  inputs:
+    command: custom
+    custom: nbgv
+    arguments: cloud
+  displayName: Set Version
+
+- task: DotNetCoreCLI@2
+  inputs:
+    command: pack
+    packagesToPack: src/AClassLibrary/AClassLibrary.csproj
+    configuration: $(BuildConfiguration)
+    packDirectory: $(Build.ArtifactStagingDirectory)/Packages
+    verbosityPack: Minimal
+  displayName: Build Package
+
+- publish: $(Build.ArtifactStagingDirectory)/Packages
+  displayName: Publish Package Artifacts
+  artifact: BuildPackages

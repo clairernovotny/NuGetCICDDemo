@@ -1,0 +1,45 @@
+name: Build Package
+
+on:
+  push:
+    branches: 
+      - master
+      - rel/*
+  
+  pull_request:
+    branches: 
+      - master
+      - rel/*
+      
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+      with:
+        fetch-depth: 0 # avoid shallow clone so nbgv can do its work.
+      
+    - name: Setup .NET Core
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 3.1.101
+    
+    - name: Restore tools
+      run: dotnet tool restore
+    
+    - name: Set Version
+      run: dotnet nbgv cloud
+      
+    - run: mkdir artifacts
+      
+    - name: Build with dotnet
+      run: dotnet pack --configuration Release /p:PackageOutputPath=artifacts
+    
+    - name: Upload Artifact
+      uses: actions/upload-artifact@v1
+      with:
+        name: BuildPackages
+        path: artifacts
+        

@@ -3,6 +3,7 @@
 namespace AClassLibrary
 {
     public class Class1
-    {
+    { 
+        //
     }
 }
